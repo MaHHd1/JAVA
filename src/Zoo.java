@@ -10,7 +10,7 @@ public class Zoo {
         this.name = name;
         this.city = city;
         this.nbrCages = nbrCages;
-        this.animals = new Animal[25];
+        this.animals = new Animal[25]; // Maximum 25 animaux
     }
 
 
@@ -20,8 +20,6 @@ public class Zoo {
         System.out.println("Nombre de cages: " + nbrCages);
     }
 
-
-    @Override
     public String toString() {
         return "Zoo{" +
                 "name='" + name + '\'' +

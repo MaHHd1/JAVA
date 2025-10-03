@@ -9,7 +9,6 @@ public class Animal {
     public Animal() {
     }
 
-
     public Animal(String family, String name, int age, boolean isMammal) {
         this.family = family;
         this.name = name;
@@ -18,7 +17,6 @@ public class Animal {
     }
 
 
-    @Override
     public String toString() {
         return "Animal{" +
                 "family='" + family + '\'' +
