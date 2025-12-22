@@ -1,0 +1,280 @@
+Index: src/tn/esprit/gestionzoo/entities/Animal.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package tn.esprit.gestionzoo.entities;\r\n\r\npublic class Animal {\r\n    private String family;\r\n    private String name;\r\n    private int age;\r\n    private boolean isMammal;\r\n\r\n    public Animal() {\r\n    }\r\n\r\n    public Animal(String family, String name, int age, boolean isMammal) {\r\n        this.family = family;\r\n        this.name = name;\r\n        setAge(age);\r\n        this.isMammal = isMammal;\r\n    }\r\n\r\n    public String getFamily() {\r\n        return family;\r\n    }\r\n\r\n    public String getName() {\r\n        return name;\r\n    }\r\n\r\n    public int getAge() {\r\n        return age;\r\n    }\r\n\r\n    public boolean isMammal() {\r\n        return isMammal;\r\n    }\r\n\r\n    public void setFamily(String family) {\r\n        this.family = family;\r\n    }\r\n\r\n    public void setName(String name) {\r\n        this.name = name;\r\n    }\r\n\r\n    public void setAge(int age) {\r\n        if (age >= 0) {\r\n            this.age = age;\r\n        } else {\r\n            System.out.println(\"Erreur : L'âge ne peut pas être négatif. Âge mis à 0.\");\r\n            this.age = 0;\r\n        }\r\n    }\r\n\r\n    public void setMammal(boolean mammal) {\r\n        isMammal = mammal;\r\n    }\r\n\r\n    @Override\r\n    public String toString() {\r\n        return \"Animal{\" +\r\n                \"family='\" + family + '\\'' +\r\n                \", name='\" + name + '\\'' +\r\n                \", age=\" + age +\r\n                \", isMammal=\" + isMammal +\r\n                '}';\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/tn/esprit/gestionzoo/entities/Animal.java b/src/tn/esprit/gestionzoo/entities/Animal.java
+--- a/src/tn/esprit/gestionzoo/entities/Animal.java	(revision 265c2bcc30121589ee738d44b911feb6e97d6c0a)
++++ b/src/tn/esprit/gestionzoo/entities/Animal.java	(date 1766419526517)
+@@ -9,7 +9,7 @@
+     public Animal() {
+     }
+ 
+-    public Animal(String family, String name, int age, boolean isMammal) {
++    public Animal(String family, String name, int age, boolean isMammal) throws InvalidAgeException {
+         this.family = family;
+         this.name = name;
+         setAge(age);
+@@ -40,13 +40,11 @@
+         this.name = name;
+     }
+ 
+-    public void setAge(int age) {
+-        if (age >= 0) {
+-            this.age = age;
+-        } else {
+-            System.out.println("Erreur : L'âge ne peut pas être négatif. Âge mis à 0.");
+-            this.age = 0;
+-        }
++    public void setAge(int age) throws InvalidAgeException {
++        if (age < 0) {
++            throw new InvalidAgeException("L'âge ne peut pas être négatif : " + age);
++        }
++        this.age = age;
+     }
+ 
+     public void setMammal(boolean mammal) {
+@@ -62,4 +60,4 @@
+                 ", isMammal=" + isMammal +
+                 '}';
+     }
+-}
++}
+\ No newline at end of file
+Index: src/tn/esprit/gestionzoo/entities/Zoo.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package tn.esprit.gestionzoo.entities;\r\n\r\npublic class Zoo {\r\n    private static final int NBR_CAGES = 25;\r\n    private static final int NBR_AQUATIC_CAGES = 10;\r\n    private Animal[] animals;\r\n    private Aquatic[] aquaticAnimals;\r\n    private String name;\r\n    private String city;\r\n    private int nbrAnimals;\r\n    private int nbrAquaticAnimals;\r\n\r\n    public Zoo(String name, String city) {\r\n        if (name == null || name.trim().isEmpty()) {\r\n            System.out.println(\"Erreur : Le nom du zoo ne peut pas être vide. Nom par défaut attribué.\");\r\n            this.name = \"Zoo Sans Nom\";\r\n        } else {\r\n            this.name = name;\r\n        }\r\n        this.city = city;\r\n        this.animals = new Animal[NBR_CAGES];\r\n        this.aquaticAnimals = new Aquatic[NBR_AQUATIC_CAGES];\r\n        this.nbrAnimals = 0;\r\n        this.nbrAquaticAnimals = 0;\r\n    }\r\n\r\n    public boolean addAnimal(Animal animal) {\r\n        if (isZooFull()) {\r\n            System.out.println(\"Le zoo est plein !\");\r\n            return false;\r\n        }\r\n\r\n        if (searchAnimal(animal.getName()) != -1) {\r\n            System.out.println(\"L'animal \" + animal.getName() + \" existe déjà dans le zoo !\");\r\n            return false;\r\n        }\r\n\r\n        animals[nbrAnimals] = animal;\r\n        nbrAnimals++;\r\n        System.out.println(\"Animal \" + animal.getName() + \" ajouté avec succès !\");\r\n        return true;\r\n    }\r\n\r\n    public void addAquaticAnimal(Aquatic aquatic) {\r\n        if (nbrAquaticAnimals >= NBR_AQUATIC_CAGES) {\r\n            System.out.println(\"Le tableau d'animaux aquatiques est plein !\");\r\n            return;\r\n        }\r\n\r\n        aquaticAnimals[nbrAquaticAnimals] = aquatic;\r\n        nbrAquaticAnimals++;\r\n        System.out.println(\"Animal aquatique \" + aquatic.getName() + \" ajouté avec succès !\");\r\n    }\r\n\r\n    public void displayAnimals() {\r\n        System.out.println(\"\\n=== Animaux du zoo \" + name + \" ===\");\r\n        if (nbrAnimals == 0) {\r\n            System.out.println(\"Aucun animal dans le zoo.\");\r\n        } else {\r\n            for (int i = 0; i < nbrAnimals; i++) {\r\n                System.out.println((i + 1) + \". \" + animals[i]);\r\n            }\r\n        }\r\n        System.out.println(\"Nombre total d'animaux : \" + nbrAnimals + \"/\" + NBR_CAGES);\r\n    }\r\n\r\n    public void displayAquaticAnimals() {\r\n        System.out.println(\"\\n=== Animaux aquatiques du zoo \" + name + \" ===\");\r\n        if (nbrAquaticAnimals == 0) {\r\n            System.out.println(\"Aucun animal aquatique dans le zoo.\");\r\n        } else {\r\n            for (int i = 0; i < nbrAquaticAnimals; i++) {\r\n                System.out.println((i + 1) + \". \" + aquaticAnimals[i]);\r\n            }\r\n        }\r\n        System.out.println(\"Nombre total d'animaux aquatiques : \" + nbrAquaticAnimals + \"/\" + NBR_AQUATIC_CAGES);\r\n    }\r\n\r\n    public void swimAllAquatics() {\r\n        System.out.println(\"\\n=== Tous les animaux aquatiques nagent ===\");\r\n        for (int i = 0; i < nbrAquaticAnimals; i++) {\r\n            System.out.print(aquaticAnimals[i].getName() + \" : \");\r\n            aquaticAnimals[i].swim();\r\n        }\r\n    }\r\n\r\n    public float maxPenguinSwimmingDepth() {\r\n        float maxDepth = 0;\r\n        for (int i = 0; i < nbrAquaticAnimals; i++) {\r\n            if (aquaticAnimals[i] instanceof Penguin) {\r\n                Penguin penguin = (Penguin) aquaticAnimals[i];\r\n                if (penguin.getSwimmingDepth() > maxDepth) {\r\n                    maxDepth = penguin.getSwimmingDepth();\r\n                }\r\n            }\r\n        }\r\n        return maxDepth;\r\n    }\r\n\r\n    public void displayNumberOfAquaticsByType() {\r\n        int nbrDolphins = 0;\r\n        int nbrPenguins = 0;\r\n\r\n        for (int i = 0; i < nbrAquaticAnimals; i++) {\r\n            if (aquaticAnimals[i] instanceof Dolphin) {\r\n                nbrDolphins++;\r\n            } else if (aquaticAnimals[i] instanceof Penguin) {\r\n                nbrPenguins++;\r\n            }\r\n        }\r\n\r\n        System.out.println(\"\\n=== Statistiques des animaux aquatiques ===\");\r\n        System.out.println(\"Nombre de dauphins : \" + nbrDolphins);\r\n        System.out.println(\"Nombre de pingouins : \" + nbrPenguins);\r\n    }\r\n\r\n    public int searchAnimal(String name) {\r\n        for (int i = 0; i < nbrAnimals; i++) {\r\n            if (animals[i].getName().equalsIgnoreCase(name)) {\r\n                return i;\r\n            }\r\n        }\r\n        return -1;\r\n    }\r\n\r\n    public boolean removeAnimal(Animal animal) {\r\n        int index = searchAnimal(animal.getName());\r\n\r\n        if (index == -1) {\r\n            System.out.println(\"Animal \" + animal.getName() + \" non trouvé !\");\r\n            return false;\r\n        }\r\n\r\n        for (int i = index; i < nbrAnimals - 1; i++) {\r\n            animals[i] = animals[i + 1];\r\n        }\r\n\r\n        animals[nbrAnimals - 1] = null;\r\n        nbrAnimals--;\r\n        System.out.println(\"Animal \" + animal.getName() + \" supprimé avec succès !\");\r\n        return true;\r\n    }\r\n\r\n    public boolean isZooFull() {\r\n        return nbrAnimals >= NBR_CAGES;\r\n    }\r\n\r\n    public static Zoo comparerZoo(Zoo z1, Zoo z2) {\r\n        if (z1.nbrAnimals > z2.nbrAnimals) {\r\n            return z1;\r\n        } else {\r\n            return z2;\r\n        }\r\n    }\r\n\r\n    public String getName() {\r\n        return name;\r\n    }\r\n\r\n    public String getCity() {\r\n        return city;\r\n    }\r\n\r\n    public int getNbrAnimals() {\r\n        return nbrAnimals;\r\n    }\r\n\r\n    public void setName(String name) {\r\n        if (name != null && !name.trim().isEmpty()) {\r\n            this.name = name;\r\n        } else {\r\n            System.out.println(\"Erreur : Le nom du zoo ne peut pas être vide.\");\r\n        }\r\n    }\r\n\r\n    public void setCity(String city) {\r\n        this.city = city;\r\n    }\r\n\r\n    @Override\r\n    public String toString() {\r\n        return \"Zoo{\" +\r\n                \"name='\" + name + '\\'' +\r\n                \", city='\" + city + '\\'' +\r\n                \", nbrAnimals=\" + nbrAnimals +\r\n                \"/\" + NBR_CAGES +\r\n                '}';\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/tn/esprit/gestionzoo/entities/Zoo.java b/src/tn/esprit/gestionzoo/entities/Zoo.java
+--- a/src/tn/esprit/gestionzoo/entities/Zoo.java	(revision 265c2bcc30121589ee738d44b911feb6e97d6c0a)
++++ b/src/tn/esprit/gestionzoo/entities/Zoo.java	(date 1766419602972)
+@@ -1,7 +1,7 @@
+ package tn.esprit.gestionzoo.entities;
+ 
+ public class Zoo {
+-    private static final int NBR_CAGES = 25;
++    private static final int NBR_CAGES = 3;
+     private static final int NBR_AQUATIC_CAGES = 10;
+     private Animal[] animals;
+     private Aquatic[] aquaticAnimals;
+@@ -24,21 +24,19 @@
+         this.nbrAquaticAnimals = 0;
+     }
+ 
+-    public boolean addAnimal(Animal animal) {
+-        if (isZooFull()) {
+-            System.out.println("Le zoo est plein !");
+-            return false;
++    public void addAnimal(Animal animal) throws ZooFullException {
++        if (nbrAnimals >= NBR_CAGES) {
++            throw new ZooFullException("Le zoo est plein ! Impossible d'ajouter " + animal.getName());
+         }
+ 
+         if (searchAnimal(animal.getName()) != -1) {
+             System.out.println("L'animal " + animal.getName() + " existe déjà dans le zoo !");
+-            return false;
++            return;
+         }
+ 
+         animals[nbrAnimals] = animal;
+         nbrAnimals++;
+         System.out.println("Animal " + animal.getName() + " ajouté avec succès !");
+-        return true;
+     }
+ 
+     public void addAquaticAnimal(Aquatic aquatic) {
+@@ -186,4 +184,4 @@
+                 "/" + NBR_CAGES +
+                 '}';
+     }
+-}
++}
+\ No newline at end of file
+Index: src/tn/esprit/gestionzoo/main/ZooManagement.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package tn.esprit.gestionzoo.main;\r\n\r\nimport tn.esprit.gestionzoo.entities.*;\r\n\r\npublic class ZooManagement {\r\n    public static void main(String[] args) {\r\n\r\n        Zoo myZoo = new Zoo(\"Belvedere Zoo\", \"Tunis\");\r\n\r\n        System.out.println(\"=== INSTRUCTION 26 : Ajout d'animaux aquatiques ===\");\r\n\r\n        Dolphin dolphin1 = new Dolphin(\"Delphinidae\", \"Flipper\", 8, true, \"Sea\", 45.5f);\r\n        Dolphin dolphin2 = new Dolphin(\"Delphinidae\", \"Dolly\", 6, true, \"Ocean\", 50.0f);\r\n        Penguin penguin1 = new Penguin(\"Spheniscidae\", \"Pingu\", 3, false, \"Antarctica\", 150.0f);\r\n        Penguin penguin2 = new Penguin(\"Spheniscidae\", \"Rico\", 5, false, \"Antarctica\", 200.0f);\r\n        Penguin penguin3 = new Penguin(\"Spheniscidae\", \"Skipper\", 7, false, \"Antarctica\", 180.0f);\r\n\r\n        myZoo.addAquaticAnimal(dolphin1);\r\n        myZoo.addAquaticAnimal(dolphin2);\r\n        myZoo.addAquaticAnimal(penguin1);\r\n        myZoo.addAquaticAnimal(penguin2);\r\n        myZoo.addAquaticAnimal(penguin3);\r\n\r\n        myZoo.displayAquaticAnimals();\r\n\r\n        System.out.println(\"\\n=== INSTRUCTION 27 : swim() pour tous les animaux aquatiques ===\");\r\n        myZoo.swimAllAquatics();\r\n\r\n        System.out.println(\"\\n*** REMARQUE INSTRUCTION 27 ***\");\r\n        System.out.println(\"Chaque animal aquatique affiche son propre message :\");\r\n        System.out.println(\"- Les dauphins affichent : 'This dolphin is swimming.'\");\r\n        System.out.println(\"- Les pingouins affichent : 'This penguin is swimming.'\");\r\n        System.out.println(\"Le polymorphisme permet à chaque classe d'avoir son comportement spécifique !\");\r\n\r\n        System.out.println(\"\\n=== INSTRUCTION 29 : Profondeur maximale des pingouins ===\");\r\n        float maxDepth = myZoo.maxPenguinSwimmingDepth();\r\n        System.out.println(\"La profondeur maximale des pingouins est : \" + maxDepth + \" mètres\");\r\n\r\n        System.out.println(\"\\n=== INSTRUCTION 30 : Nombre d'animaux aquatiques par type ===\");\r\n        myZoo.displayNumberOfAquaticsByType();\r\n\r\n        System.out.println(\"\\n=== INSTRUCTION 31 : Test de equals() ===\");\r\n        Aquatic aquatic1 = new Dolphin(\"Delphinidae\", \"TestDolphin\", 5, true, \"Ocean\", 40.0f);\r\n        Aquatic aquatic2 = new Dolphin(\"Delphinidae\", \"TestDolphin\", 5, true, \"Ocean\", 50.0f);\r\n        Aquatic aquatic3 = new Dolphin(\"Delphinidae\", \"TestDolphin\", 6, true, \"Ocean\", 40.0f);\r\n        Aquatic aquatic4 = new Penguin(\"Spheniscidae\", \"TestDolphin\", 5, false, \"Ocean\", 100.0f);\r\n\r\n        System.out.println(\"aquatic1.equals(aquatic2) : \" + aquatic1.equals(aquatic2));\r\n        System.out.println(\"(même nom, même âge, même habitat, vitesse différente)\");\r\n\r\n        System.out.println(\"\\naquatic1.equals(aquatic3) : \" + aquatic1.equals(aquatic3));\r\n        System.out.println(\"(même nom, âge différent, même habitat)\");\r\n\r\n        System.out.println(\"\\naquatic1.equals(aquatic4) : \" + aquatic1.equals(aquatic4));\r\n        System.out.println(\"(même nom, même âge, même habitat, mais types différents)\");\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/tn/esprit/gestionzoo/main/ZooManagement.java b/src/tn/esprit/gestionzoo/main/ZooManagement.java
+--- a/src/tn/esprit/gestionzoo/main/ZooManagement.java	(revision 265c2bcc30121589ee738d44b911feb6e97d6c0a)
++++ b/src/tn/esprit/gestionzoo/main/ZooManagement.java	(date 1766419617988)
+@@ -7,51 +7,71 @@
+ 
+         Zoo myZoo = new Zoo("Belvedere Zoo", "Tunis");
+ 
+-        System.out.println("=== INSTRUCTION 26 : Ajout d'animaux aquatiques ===");
++        System.out.println("=== Test avec nombre de cages réduit à 3 ===\n");
++
++        try {
++            Animal lion = new Animal("Felidae", "Simba", 5, true);
++            myZoo.addAnimal(lion);
++            System.out.println("Nombre d'animaux dans le zoo : " + myZoo.getNbrAnimals());
+ 
+-        Dolphin dolphin1 = new Dolphin("Delphinidae", "Flipper", 8, true, "Sea", 45.5f);
+-        Dolphin dolphin2 = new Dolphin("Delphinidae", "Dolly", 6, true, "Ocean", 50.0f);
+-        Penguin penguin1 = new Penguin("Spheniscidae", "Pingu", 3, false, "Antarctica", 150.0f);
+-        Penguin penguin2 = new Penguin("Spheniscidae", "Rico", 5, false, "Antarctica", 200.0f);
+-        Penguin penguin3 = new Penguin("Spheniscidae", "Skipper", 7, false, "Antarctica", 180.0f);
+-
+-        myZoo.addAquaticAnimal(dolphin1);
+-        myZoo.addAquaticAnimal(dolphin2);
+-        myZoo.addAquaticAnimal(penguin1);
+-        myZoo.addAquaticAnimal(penguin2);
+-        myZoo.addAquaticAnimal(penguin3);
++            Animal elephant = new Animal("Elephantidae", "Dumbo", 10, true);
++            myZoo.addAnimal(elephant);
++            System.out.println("Nombre d'animaux dans le zoo : " + myZoo.getNbrAnimals());
++
++            Animal tiger = new Animal("Felidae", "Rajah", 7, true);
++            myZoo.addAnimal(tiger);
++            System.out.println("Nombre d'animaux dans le zoo : " + myZoo.getNbrAnimals());
++
++            System.out.println("\nTentative d'ajout d'un 4ème animal (zoo plein)...");
++            Animal giraffe = new Animal("Giraffidae", "Melman", 6, true);
++            myZoo.addAnimal(giraffe);
++            System.out.println("Nombre d'animaux dans le zoo : " + myZoo.getNbrAnimals());
++
++        } catch (ZooFullException e) {
++            System.out.println("Exception attrapée : " + e.getMessage());
++            System.out.println("Nombre d'animaux dans le zoo : " + myZoo.getNbrAnimals());
++        } catch (InvalidAgeException e) {
++            System.out.println("Exception attrapée : " + e.getMessage());
++        }
++
++        myZoo.displayAnimals();
++
++        System.out.println("\n=== Test InvalidAgeException ===\n");
++
++        try {
++            System.out.println("Tentative de création d'un animal avec âge négatif...");
++            Animal invalidAnimal = new Animal("Canidae", "Wolf", -5, true);
++            myZoo.addAnimal(invalidAnimal);
++            System.out.println("Nombre d'animaux dans le zoo : " + myZoo.getNbrAnimals());
++        } catch (InvalidAgeException e) {
++            System.out.println("Exception attrapée : " + e.getMessage());
++            System.out.println("L'animal n'a pas été ajouté.");
++            System.out.println("Nombre d'animaux dans le zoo : " + myZoo.getNbrAnimals());
++        } catch (ZooFullException e) {
++            System.out.println("Exception attrapée : " + e.getMessage());
++        }
++
++        System.out.println("\n=== Test avec animaux aquatiques ===\n");
++
++        try {
++            Dolphin dolphin1 = new Dolphin("Delphinidae", "Flipper", 8, true, "Sea", 45.5f);
++            myZoo.addAquaticAnimal(dolphin1);
++
++            Penguin penguin1 = new Penguin("Spheniscidae", "Pingu", 3, false, "Antarctica", 150.0f);
++            myZoo.addAquaticAnimal(penguin1);
++
++            System.out.println("\nTentative de création d'un pingouin avec âge négatif...");
++            Penguin invalidPenguin = new Penguin("Spheniscidae", "BadPenguin", -2, false, "Antarctica", 100.0f);
++            myZoo.addAquaticAnimal(invalidPenguin);
++
++        } catch (InvalidAgeException e) {
++            System.out.println("Exception attrapée : " + e.getMessage());
++            System.out.println("Le pingouin n'a pas été créé.");
++        }
+ 
+         myZoo.displayAquaticAnimals();
+-
+-        System.out.println("\n=== INSTRUCTION 27 : swim() pour tous les animaux aquatiques ===");
+         myZoo.swimAllAquatics();
+ 
+-        System.out.println("\n*** REMARQUE INSTRUCTION 27 ***");
+-        System.out.println("Chaque animal aquatique affiche son propre message :");
+-        System.out.println("- Les dauphins affichent : 'This dolphin is swimming.'");
+-        System.out.println("- Les pingouins affichent : 'This penguin is swimming.'");
+-        System.out.println("Le polymorphisme permet à chaque classe d'avoir son comportement spécifique !");
+-
+-        System.out.println("\n=== INSTRUCTION 29 : Profondeur maximale des pingouins ===");
+-        float maxDepth = myZoo.maxPenguinSwimmingDepth();
+-        System.out.println("La profondeur maximale des pingouins est : " + maxDepth + " mètres");
+-
+-        System.out.println("\n=== INSTRUCTION 30 : Nombre d'animaux aquatiques par type ===");
+-        myZoo.displayNumberOfAquaticsByType();
+-
+-        System.out.println("\n=== INSTRUCTION 31 : Test de equals() ===");
+-        Aquatic aquatic1 = new Dolphin("Delphinidae", "TestDolphin", 5, true, "Ocean", 40.0f);
+-        Aquatic aquatic2 = new Dolphin("Delphinidae", "TestDolphin", 5, true, "Ocean", 50.0f);
+-        Aquatic aquatic3 = new Dolphin("Delphinidae", "TestDolphin", 6, true, "Ocean", 40.0f);
+-        Aquatic aquatic4 = new Penguin("Spheniscidae", "TestDolphin", 5, false, "Ocean", 100.0f);
+-
+-        System.out.println("aquatic1.equals(aquatic2) : " + aquatic1.equals(aquatic2));
+-        System.out.println("(même nom, même âge, même habitat, vitesse différente)");
+-
+-        System.out.println("\naquatic1.equals(aquatic3) : " + aquatic1.equals(aquatic3));
+-        System.out.println("(même nom, âge différent, même habitat)");
+-
+-        System.out.println("\naquatic1.equals(aquatic4) : " + aquatic1.equals(aquatic4));
+-        System.out.println("(même nom, même âge, même habitat, mais types différents)");
++        System.out.println("\n=== Fin des tests ===");
+     }
+ }
+\ No newline at end of file
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"23b8e082-f1c2-4560-b68e-209f66d199bc\" name=\"Changes\" comment=\"\">\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/tn/esprit/gestionzoo/entities/Animal.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/tn/esprit/gestionzoo/entities/Animal.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/tn/esprit/gestionzoo/entities/Aquatic.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/tn/esprit/gestionzoo/entities/Aquatic.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/tn/esprit/gestionzoo/entities/Penguin.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/tn/esprit/gestionzoo/entities/Penguin.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/tn/esprit/gestionzoo/entities/Zoo.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/tn/esprit/gestionzoo/entities/Zoo.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/tn/esprit/gestionzoo/main/ZooManagement.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/tn/esprit/gestionzoo/main/ZooManagement.java\" afterDir=\"false\" />\r\n    </list>\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"FileTemplateManagerImpl\">\r\n    <option name=\"RECENT_TEMPLATES\">\r\n      <list>\r\n        <option value=\"Class\" />\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n    <option name=\"UPDATE_TYPE\" value=\"REBASE\" />\r\n  </component>\r\n  <component name=\"GitHubPullRequestSearchHistory\">{\r\n  &quot;lastFilter&quot;: {\r\n    &quot;state&quot;: &quot;OPEN&quot;,\r\n    &quot;assignee&quot;: &quot;MaHHd1&quot;\r\n  }\r\n}</component>\r\n  <component name=\"GithubPullRequestsUISettings\">{\r\n  &quot;selectedUrlAndAccountId&quot;: {\r\n    &quot;url&quot;: &quot;https://github.com/MaHHd1/JAVA&quot;,\r\n    &quot;accountId&quot;: &quot;e818207b-21c0-464f-a9b4-f0859c967bdd&quot;\r\n  }\r\n}</component>\r\n  <component name=\"ProjectColorInfo\">{\r\n  &quot;associatedIndex&quot;: 2\r\n}</component>\r\n  <component name=\"ProjectId\" id=\"37CjQyVuVqw1Ac4qDm1VDCdTSI8\" />\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\"><![CDATA[{\r\n  \"keyToString\": {\r\n    \"ModuleVcsDetector.initialDetectionPerformed\": \"true\",\r\n    \"RunOnceActivity.ShowReadmeOnStart\": \"true\",\r\n    \"RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252\": \"true\",\r\n    \"git-widget-placeholder\": \"Prosit-6\",\r\n    \"junie.onboarding.icon.badge.shown\": \"true\",\r\n    \"kotlin-language-version-configured\": \"true\",\r\n    \"node.js.detected.package.eslint\": \"true\",\r\n    \"node.js.detected.package.tslint\": \"true\",\r\n    \"node.js.selected.package.eslint\": \"(autodetect)\",\r\n    \"node.js.selected.package.tslint\": \"(autodetect)\",\r\n    \"nodejs_package_manager_path\": \"npm\",\r\n    \"onboarding.tips.debug.path\": \"C:/Users/Mahdi/Desktop/JAVA/JAVAGIT/src/Main.java\",\r\n    \"settings.editor.selected.configurable\": \"ml.llm.LLMConfigurable\",\r\n    \"to.speed.mode.migration.done\": \"true\",\r\n    \"vue.rearranger.settings.migration\": \"true\"\r\n  }\r\n}]]></component>\r\n  <component name=\"SharedIndexes\">\r\n    <attachedChunks>\r\n      <set>\r\n        <option value=\"bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.26199.169\" />\r\n        <option value=\"bundled-js-predefined-d6986cc7102b-9c94529fcfe0-JavaScript-IU-252.26199.169\" />\r\n      </set>\r\n    </attachedChunks>\r\n  </component>\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"23b8e082-f1c2-4560-b68e-209f66d199bc\" name=\"Changes\" comment=\"\" />\r\n      <created>1766413938729</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1766413938729</updated>\r\n      <workItem from=\"1766413940326\" duration=\"20000\" />\r\n      <workItem from=\"1766414001680\" duration=\"3961000\" />\r\n    </task>\r\n    <servers />\r\n  </component>\r\n  <component name=\"TypeScriptGeneratedFilesManager\">\r\n    <option name=\"version\" value=\"3\" />\r\n  </component>\r\n  <component name=\"Vcs.Log.Tabs.Properties\">\r\n    <option name=\"TAB_STATES\">\r\n      <map>\r\n        <entry key=\"MAIN\">\r\n          <value>\r\n            <State />\r\n          </value>\r\n        </entry>\r\n      </map>\r\n    </option>\r\n  </component>\r\n  <component name=\"XSLT-Support.FileAssociations.UIState\">\r\n    <expand />\r\n    <select />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision 265c2bcc30121589ee738d44b911feb6e97d6c0a)
++++ b/.idea/workspace.xml	(date 1766419618084)
+@@ -5,10 +5,10 @@
+   </component>
+   <component name="ChangeListManager">
+     <list default="true" id="23b8e082-f1c2-4560-b68e-209f66d199bc" name="Changes" comment="">
++      <change afterPath="$PROJECT_DIR$/src/tn/esprit/gestionzoo/entities/InvalidAgeException.java" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/tn/esprit/gestionzoo/entities/ZooFullException.java" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/src/tn/esprit/gestionzoo/entities/Animal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/tn/esprit/gestionzoo/entities/Animal.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/tn/esprit/gestionzoo/entities/Aquatic.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/tn/esprit/gestionzoo/entities/Aquatic.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/tn/esprit/gestionzoo/entities/Penguin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/tn/esprit/gestionzoo/entities/Penguin.java" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/src/tn/esprit/gestionzoo/entities/Zoo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/tn/esprit/gestionzoo/entities/Zoo.java" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/src/tn/esprit/gestionzoo/main/ZooManagement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/tn/esprit/gestionzoo/main/ZooManagement.java" afterDir="false" />
+     </list>
+Index: src/tn/esprit/gestionzoo/entities/InvalidAgeException.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/tn/esprit/gestionzoo/entities/InvalidAgeException.java b/src/tn/esprit/gestionzoo/entities/InvalidAgeException.java
+new file mode 100644
+--- /dev/null	(date 1766419578097)
++++ b/src/tn/esprit/gestionzoo/entities/InvalidAgeException.java	(date 1766419578097)
+@@ -0,0 +1,7 @@
++package tn.esprit.gestionzoo.entities;
++
++public class InvalidAgeException extends Exception {
++    public InvalidAgeException(String message) {
++        super(message);
++    }
++}
+\ No newline at end of file
+Index: src/tn/esprit/gestionzoo/entities/ZooFullException.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/tn/esprit/gestionzoo/entities/ZooFullException.java b/src/tn/esprit/gestionzoo/entities/ZooFullException.java
+new file mode 100644
+--- /dev/null	(date 1766419564221)
++++ b/src/tn/esprit/gestionzoo/entities/ZooFullException.java	(date 1766419564221)
+@@ -0,0 +1,7 @@
++package tn.esprit.gestionzoo.entities;
++
++public class ZooFullException extends Exception {
++    public ZooFullException(String message) {
++        super(message);
++    }
++}
+\ No newline at end of file
