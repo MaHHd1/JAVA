@@ -5,11 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="23b8e082-f1c2-4560-b68e-209f66d199bc" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/tn/esprit/gestionzoo/entities/InvalidAgeException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/tn/esprit/gestionzoo/entities/ZooFullException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/tn/esprit/gestionzoo/entities/Carnivore.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/tn/esprit/gestionzoo/entities/Food.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/tn/esprit/gestionzoo/entities/Herbivore.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/tn/esprit/gestionzoo/entities/Omnivore.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/tn/esprit/gestionzoo/entities/Animal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/tn/esprit/gestionzoo/entities/Animal.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/tn/esprit/gestionzoo/entities/Zoo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/tn/esprit/gestionzoo/entities/Zoo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/tn/esprit/gestionzoo/entities/Aquatic.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/tn/esprit/gestionzoo/entities/Aquatic.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/tn/esprit/gestionzoo/entities/Dolphin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/tn/esprit/gestionzoo/entities/Dolphin.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/tn/esprit/gestionzoo/entities/Penguin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/tn/esprit/gestionzoo/entities/Penguin.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/tn/esprit/gestionzoo/entities/Terrestrial.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/tn/esprit/gestionzoo/entities/Terrestrial.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/tn/esprit/gestionzoo/main/ZooManagement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/tn/esprit/gestionzoo/main/ZooManagement.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -53,7 +57,7 @@
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "git-widget-placeholder": "Prosit-6",
+    "git-widget-placeholder": "Prosit-7",
     "junie.onboarding.icon.badge.shown": "true",
     "kotlin-language-version-configured": "true",
     "node.js.detected.package.eslint": "true",

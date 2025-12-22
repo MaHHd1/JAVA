@@ -1,0 +1,400 @@
+Index: src/tn/esprit/gestionzoo/main/ZooManagement.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package tn.esprit.gestionzoo.main;\r\n\r\nimport tn.esprit.gestionzoo.entities.*;\r\n\r\npublic class ZooManagement {\r\n    public static void main(String[] args) {\r\n\r\n        Zoo myZoo = new Zoo(\"Belvedere Zoo\", \"Tunis\");\r\n\r\n        System.out.println(\"=== Test avec nombre de cages réduit à 3 ===\\n\");\r\n\r\n        try {\r\n            Animal lion = new Animal(\"Felidae\", \"Simba\", 5, true);\r\n            myZoo.addAnimal(lion);\r\n            System.out.println(\"Nombre d'animaux dans le zoo : \" + myZoo.getNbrAnimals());\r\n\r\n            Animal elephant = new Animal(\"Elephantidae\", \"Dumbo\", 10, true);\r\n            myZoo.addAnimal(elephant);\r\n            System.out.println(\"Nombre d'animaux dans le zoo : \" + myZoo.getNbrAnimals());\r\n\r\n            Animal tiger = new Animal(\"Felidae\", \"Rajah\", 7, true);\r\n            myZoo.addAnimal(tiger);\r\n            System.out.println(\"Nombre d'animaux dans le zoo : \" + myZoo.getNbrAnimals());\r\n\r\n            System.out.println(\"\\nTentative d'ajout d'un 4ème animal (zoo plein)...\");\r\n            Animal giraffe = new Animal(\"Giraffidae\", \"Melman\", 6, true);\r\n            myZoo.addAnimal(giraffe);\r\n            System.out.println(\"Nombre d'animaux dans le zoo : \" + myZoo.getNbrAnimals());\r\n\r\n        } catch (ZooFullException e) {\r\n            System.out.println(\"Exception attrapée : \" + e.getMessage());\r\n            System.out.println(\"Nombre d'animaux dans le zoo : \" + myZoo.getNbrAnimals());\r\n        } catch (InvalidAgeException e) {\r\n            System.out.println(\"Exception attrapée : \" + e.getMessage());\r\n        }\r\n\r\n        myZoo.displayAnimals();\r\n\r\n        System.out.println(\"\\n=== Test InvalidAgeException ===\\n\");\r\n\r\n        try {\r\n            System.out.println(\"Tentative de création d'un animal avec âge négatif...\");\r\n            Animal invalidAnimal = new Animal(\"Canidae\", \"Wolf\", -5, true);\r\n            myZoo.addAnimal(invalidAnimal);\r\n            System.out.println(\"Nombre d'animaux dans le zoo : \" + myZoo.getNbrAnimals());\r\n        } catch (InvalidAgeException e) {\r\n            System.out.println(\"Exception attrapée : \" + e.getMessage());\r\n            System.out.println(\"L'animal n'a pas été ajouté.\");\r\n            System.out.println(\"Nombre d'animaux dans le zoo : \" + myZoo.getNbrAnimals());\r\n        } catch (ZooFullException e) {\r\n            System.out.println(\"Exception attrapée : \" + e.getMessage());\r\n        }\r\n\r\n        System.out.println(\"\\n=== Test avec animaux aquatiques ===\\n\");\r\n\r\n        try {\r\n            Dolphin dolphin1 = new Dolphin(\"Delphinidae\", \"Flipper\", 8, true, \"Sea\", 45.5f);\r\n            myZoo.addAquaticAnimal(dolphin1);\r\n\r\n            Penguin penguin1 = new Penguin(\"Spheniscidae\", \"Pingu\", 3, false, \"Antarctica\", 150.0f);\r\n            myZoo.addAquaticAnimal(penguin1);\r\n\r\n            System.out.println(\"\\nTentative de création d'un pingouin avec âge négatif...\");\r\n            Penguin invalidPenguin = new Penguin(\"Spheniscidae\", \"BadPenguin\", -2, false, \"Antarctica\", 100.0f);\r\n            myZoo.addAquaticAnimal(invalidPenguin);\r\n\r\n        } catch (InvalidAgeException e) {\r\n            System.out.println(\"Exception attrapée : \" + e.getMessage());\r\n            System.out.println(\"Le pingouin n'a pas été créé.\");\r\n        }\r\n\r\n        myZoo.displayAquaticAnimals();\r\n        myZoo.swimAllAquatics();\r\n\r\n        System.out.println(\"\\n=== Fin des tests ===\");\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/tn/esprit/gestionzoo/main/ZooManagement.java b/src/tn/esprit/gestionzoo/main/ZooManagement.java
+--- a/src/tn/esprit/gestionzoo/main/ZooManagement.java	(revision 99ecd3458ea70e329523e71e1ec5c3690a9dec05)
++++ b/src/tn/esprit/gestionzoo/main/ZooManagement.java	(date 1766420186691)
+@@ -5,73 +5,68 @@
+ public class ZooManagement {
+     public static void main(String[] args) {
+ 
+-        Zoo myZoo = new Zoo("Belvedere Zoo", "Tunis");
+-
+-        System.out.println("=== Test avec nombre de cages réduit à 3 ===\n");
++        System.out.println("=== INSTRUCTION 38 : Test des interfaces ===\n");
+ 
+         try {
+-            Animal lion = new Animal("Felidae", "Simba", 5, true);
+-            myZoo.addAnimal(lion);
+-            System.out.println("Nombre d'animaux dans le zoo : " + myZoo.getNbrAnimals());
++            Dolphin dolphin = new Dolphin("Delphinidae", "Flipper", 8, true, "Sea", 45.5f);
++            Penguin penguin = new Penguin("Spheniscidae", "Pingu", 3, false, "Antarctica", 150.0f);
++            Terrestrial terrestrial = new Terrestrial("Ursidae", "Bear", 5, true, 4);
+ 
+-            Animal elephant = new Animal("Elephantidae", "Dumbo", 10, true);
+-            myZoo.addAnimal(elephant);
+-            System.out.println("Nombre d'animaux dans le zoo : " + myZoo.getNbrAnimals());
++            System.out.println("--- Test Dolphin (Carnivore) ---");
++            System.out.println(dolphin);
++            dolphin.eatMeat(Food.MEAT);
++            dolphin.eatMeat(Food.PLANT);
++            dolphin.swim();
+ 
+-            Animal tiger = new Animal("Felidae", "Rajah", 7, true);
+-            myZoo.addAnimal(tiger);
+-            System.out.println("Nombre d'animaux dans le zoo : " + myZoo.getNbrAnimals());
++            System.out.println("\n--- Test Penguin (Carnivore) ---");
++            System.out.println(penguin);
++            penguin.eatMeat(Food.MEAT);
++            penguin.eatMeat(Food.BOTH);
++            penguin.swim();
+ 
+-            System.out.println("\nTentative d'ajout d'un 4ème animal (zoo plein)...");
+-            Animal giraffe = new Animal("Giraffidae", "Melman", 6, true);
+-            myZoo.addAnimal(giraffe);
+-            System.out.println("Nombre d'animaux dans le zoo : " + myZoo.getNbrAnimals());
++            System.out.println("\n--- Test Terrestrial (Omnivore) ---");
++            System.out.println(terrestrial);
++            terrestrial.eatMeat(Food.MEAT);
++            terrestrial.eatPlant(Food.PLANT);
++            terrestrial.eatPlantAndMeat(Food.BOTH);
++            terrestrial.eatMeat(Food.PLANT);
++            terrestrial.eatPlant(Food.MEAT);
+ 
+-        } catch (ZooFullException e) {
+-            System.out.println("Exception attrapée : " + e.getMessage());
+-            System.out.println("Nombre d'animaux dans le zoo : " + myZoo.getNbrAnimals());
+-        } catch (InvalidAgeException e) {
+-            System.out.println("Exception attrapée : " + e.getMessage());
+-        }
++            System.out.println("\n=== Test dans un Zoo ===");
++            Zoo myZoo = new Zoo("Belvedere Zoo", "Tunis");
+ 
+-        myZoo.displayAnimals();
++            myZoo.addAquaticAnimal(dolphin);
++            myZoo.addAquaticAnimal(penguin);
++            myZoo.addAnimal(terrestrial);
++
++            myZoo.displayAquaticAnimals();
++            myZoo.displayAnimals();
+ 
+-        System.out.println("\n=== Test InvalidAgeException ===\n");
++            System.out.println("\n--- Test swim() pour tous les aquatiques ---");
++            myZoo.swimAllAquatics();
++
++            System.out.println("\n--- Test feeding aquatic animals ---");
++            System.out.println("Feeding aquatic animals with MEAT:");
++            for (int i = 0; i < 2; i++) {
++                if (i == 0) {
++                    dolphin.eatMeat(Food.MEAT);
++                } else {
++                    penguin.eatMeat(Food.MEAT);
++                }
++            }
+ 
+-        try {
+-            System.out.println("Tentative de création d'un animal avec âge négatif...");
+-            Animal invalidAnimal = new Animal("Canidae", "Wolf", -5, true);
+-            myZoo.addAnimal(invalidAnimal);
+-            System.out.println("Nombre d'animaux dans le zoo : " + myZoo.getNbrAnimals());
++            System.out.println("\n--- Test feeding terrestrial animal ---");
++            System.out.println("Feeding terrestrial animal with different foods:");
++            terrestrial.eatMeat(Food.MEAT);
++            terrestrial.eatPlant(Food.PLANT);
++            terrestrial.eatPlantAndMeat(Food.BOTH);
++
+         } catch (InvalidAgeException e) {
+             System.out.println("Exception attrapée : " + e.getMessage());
+-            System.out.println("L'animal n'a pas été ajouté.");
+-            System.out.println("Nombre d'animaux dans le zoo : " + myZoo.getNbrAnimals());
+         } catch (ZooFullException e) {
+             System.out.println("Exception attrapée : " + e.getMessage());
+         }
+ 
+-        System.out.println("\n=== Test avec animaux aquatiques ===\n");
+-
+-        try {
+-            Dolphin dolphin1 = new Dolphin("Delphinidae", "Flipper", 8, true, "Sea", 45.5f);
+-            myZoo.addAquaticAnimal(dolphin1);
+-
+-            Penguin penguin1 = new Penguin("Spheniscidae", "Pingu", 3, false, "Antarctica", 150.0f);
+-            myZoo.addAquaticAnimal(penguin1);
+-
+-            System.out.println("\nTentative de création d'un pingouin avec âge négatif...");
+-            Penguin invalidPenguin = new Penguin("Spheniscidae", "BadPenguin", -2, false, "Antarctica", 100.0f);
+-            myZoo.addAquaticAnimal(invalidPenguin);
+-
+-        } catch (InvalidAgeException e) {
+-            System.out.println("Exception attrapée : " + e.getMessage());
+-            System.out.println("Le pingouin n'a pas été créé.");
+-        }
+-
+-        myZoo.displayAquaticAnimals();
+-        myZoo.swimAllAquatics();
+-
+         System.out.println("\n=== Fin des tests ===");
+     }
+ }
+\ No newline at end of file
+Index: src/tn/esprit/gestionzoo/entities/Aquatic.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package tn.esprit.gestionzoo.entities;\r\n\r\npublic abstract class Aquatic extends Animal {\r\n    private String habitat;\r\n\r\n    public Aquatic() {\r\n        super();\r\n    }\r\n\r\n    public Aquatic(String family, String name, int age, boolean isMammal, String habitat) {\r\n        super(family, name, age, isMammal);\r\n        this.habitat = habitat;\r\n    }\r\n\r\n    public String getHabitat() {\r\n        return habitat;\r\n    }\r\n\r\n    public void setHabitat(String habitat) {\r\n        this.habitat = habitat;\r\n    }\r\n\r\n    @Override\r\n    public String toString() {\r\n        return \"Aquatic{\" +\r\n                \"family='\" + getFamily() + '\\'' +\r\n                \", name='\" + getName() + '\\'' +\r\n                \", age=\" + getAge() +\r\n                \", isMammal=\" + isMammal() +\r\n                \", habitat='\" + habitat + '\\'' +\r\n                '}';\r\n    }\r\n\r\n    public abstract void swim();\r\n\r\n    @Override\r\n    public boolean equals(Object obj) {\r\n        if (this == obj) return true;\r\n        if (obj == null || !(obj instanceof Aquatic)) return false;\r\n\r\n        Aquatic aquatic = (Aquatic) obj;\r\n\r\n        return this.getName().equals(aquatic.getName()) &&\r\n                this.getAge() == aquatic.getAge() &&\r\n                this.habitat.equals(aquatic.habitat);\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/tn/esprit/gestionzoo/entities/Aquatic.java b/src/tn/esprit/gestionzoo/entities/Aquatic.java
+--- a/src/tn/esprit/gestionzoo/entities/Aquatic.java	(revision 99ecd3458ea70e329523e71e1ec5c3690a9dec05)
++++ b/src/tn/esprit/gestionzoo/entities/Aquatic.java	(date 1766420055003)
+@@ -1,13 +1,13 @@
+ package tn.esprit.gestionzoo.entities;
+ 
+-public abstract class Aquatic extends Animal {
++public abstract class Aquatic extends Animal implements Carnivore<Food> {
+     private String habitat;
+ 
+     public Aquatic() {
+         super();
+     }
+ 
+-    public Aquatic(String family, String name, int age, boolean isMammal, String habitat) {
++    public Aquatic(String family, String name, int age, boolean isMammal, String habitat) throws InvalidAgeException {
+         super(family, name, age, isMammal);
+         this.habitat = habitat;
+     }
+@@ -33,6 +33,15 @@
+ 
+     public abstract void swim();
+ 
++    @Override
++    public void eatMeat(Food meat) {
++        if (meat == Food.MEAT) {
++            System.out.println(getName() + " is eating meat.");
++        } else {
++            System.out.println(getName() + " cannot eat this type of food.");
++        }
++    }
++
+     @Override
+     public boolean equals(Object obj) {
+         if (this == obj) return true;
+@@ -44,4 +53,4 @@
+                 this.getAge() == aquatic.getAge() &&
+                 this.habitat.equals(aquatic.habitat);
+     }
+-}
+\ No newline at end of file
++}
+Index: src/tn/esprit/gestionzoo/entities/Terrestrial.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package tn.esprit.gestionzoo.entities;\r\n\r\npublic class Terrestrial extends Animal {\r\n    private int nbrLegs;\r\n\r\n    public Terrestrial() {\r\n        super();\r\n    }\r\n\r\n    public Terrestrial(String family, String name, int age, boolean isMammal, int nbrLegs) {\r\n        super(family, name, age, isMammal);\r\n        this.nbrLegs = nbrLegs;\r\n    }\r\n\r\n    public int getNbrLegs() {\r\n        return nbrLegs;\r\n    }\r\n\r\n    public void setNbrLegs(int nbrLegs) {\r\n        this.nbrLegs = nbrLegs;\r\n    }\r\n\r\n    @Override\r\n    public String toString() {\r\n        return \"Terrestrial{\" +\r\n                \"family='\" + getFamily() + '\\'' +\r\n                \", name='\" + getName() + '\\'' +\r\n                \", age=\" + getAge() +\r\n                \", isMammal=\" + isMammal() +\r\n                \", nbrLegs=\" + nbrLegs +\r\n                '}';\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/tn/esprit/gestionzoo/entities/Terrestrial.java b/src/tn/esprit/gestionzoo/entities/Terrestrial.java
+--- a/src/tn/esprit/gestionzoo/entities/Terrestrial.java	(revision 99ecd3458ea70e329523e71e1ec5c3690a9dec05)
++++ b/src/tn/esprit/gestionzoo/entities/Terrestrial.java	(date 1766420077253)
+@@ -1,13 +1,13 @@
+ package tn.esprit.gestionzoo.entities;
+ 
+-public class Terrestrial extends Animal {
++public class Terrestrial extends Animal implements Omnivore<Food> {
+     private int nbrLegs;
+ 
+     public Terrestrial() {
+         super();
+     }
+ 
+-    public Terrestrial(String family, String name, int age, boolean isMammal, int nbrLegs) {
++    public Terrestrial(String family, String name, int age, boolean isMammal, int nbrLegs) throws InvalidAgeException {
+         super(family, name, age, isMammal);
+         this.nbrLegs = nbrLegs;
+     }
+@@ -20,6 +20,35 @@
+         this.nbrLegs = nbrLegs;
+     }
+ 
++    @Override
++    public void eatMeat(Food meat) {
++        if (meat == Food.MEAT || meat == Food.BOTH) {
++            System.out.println(getName() + " is eating meat.");
++        } else {
++            System.out.println(getName() + " cannot eat only plants, it's omnivore.");
++        }
++    }
++
++    @Override
++    public void eatPlant(Food plant) {
++        if (plant == Food.PLANT || plant == Food.BOTH) {
++            System.out.println(getName() + " is eating plants.");
++        } else {
++            System.out.println(getName() + " cannot eat only meat, it's omnivore.");
++        }
++    }
++
++    @Override
++    public void eatPlantAndMeat(Food food) {
++        if (food == Food.BOTH) {
++            System.out.println(getName() + " is eating both plants and meat.");
++        } else if (food == Food.MEAT) {
++            System.out.println(getName() + " is eating meat only.");
++        } else if (food == Food.PLANT) {
++            System.out.println(getName() + " is eating plants only.");
++        }
++    }
++
+     @Override
+     public String toString() {
+         return "Terrestrial{" +
+@@ -30,4 +59,4 @@
+                 ", nbrLegs=" + nbrLegs +
+                 '}';
+     }
+-}
++}
+\ No newline at end of file
+Index: src/tn/esprit/gestionzoo/entities/Penguin.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package tn.esprit.gestionzoo.entities;\r\n\r\npublic class Penguin extends Aquatic {\r\n    private float swimmingDepth;\r\n\r\n    public Penguin() {\r\n        super();\r\n    }\r\n\r\n    public Penguin(String family, String name, int age, boolean isMammal, String habitat, float swimmingDepth) {\r\n        super(family, name, age, isMammal, habitat);\r\n        this.swimmingDepth = swimmingDepth;\r\n    }\r\n\r\n    public float getSwimmingDepth() {\r\n        return swimmingDepth;\r\n    }\r\n\r\n    public void setSwimmingDepth(float swimmingDepth) {\r\n        this.swimmingDepth = swimmingDepth;\r\n    }\r\n\r\n    @Override\r\n    public String toString() {\r\n        return \"Penguin{\" +\r\n                \"family='\" + getFamily() + '\\'' +\r\n                \", name='\" + getName() + '\\'' +\r\n                \", age=\" + getAge() +\r\n                \", isMammal=\" + isMammal() +\r\n                \", habitat='\" + getHabitat() + '\\'' +\r\n                \", swimmingDepth=\" + swimmingDepth +\r\n                '}';\r\n    }\r\n\r\n    @Override\r\n    public void swim() {\r\n        System.out.println(\"This penguin is swimming.\");\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/tn/esprit/gestionzoo/entities/Penguin.java b/src/tn/esprit/gestionzoo/entities/Penguin.java
+--- a/src/tn/esprit/gestionzoo/entities/Penguin.java	(revision 99ecd3458ea70e329523e71e1ec5c3690a9dec05)
++++ b/src/tn/esprit/gestionzoo/entities/Penguin.java	(date 1766420110675)
+@@ -7,7 +7,7 @@
+         super();
+     }
+ 
+-    public Penguin(String family, String name, int age, boolean isMammal, String habitat, float swimmingDepth) {
++    public Penguin(String family, String name, int age, boolean isMammal, String habitat, float swimmingDepth) throws InvalidAgeException {
+         super(family, name, age, isMammal, habitat);
+         this.swimmingDepth = swimmingDepth;
+     }
+Index: src/tn/esprit/gestionzoo/entities/Dolphin.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package tn.esprit.gestionzoo.entities;\r\n\r\npublic class Dolphin extends Aquatic {\r\n    private float swimmingSpeed;\r\n\r\n    public Dolphin() {\r\n        super();\r\n    }\r\n\r\n    public Dolphin(String family, String name, int age, boolean isMammal, String habitat, float swimmingSpeed) {\r\n        super(family, name, age, isMammal, habitat);\r\n        this.swimmingSpeed = swimmingSpeed;\r\n    }\r\n\r\n    public float getSwimmingSpeed() {\r\n        return swimmingSpeed;\r\n    }\r\n\r\n    public void setSwimmingSpeed(float swimmingSpeed) {\r\n        this.swimmingSpeed = swimmingSpeed;\r\n    }\r\n\r\n    @Override\r\n    public String toString() {\r\n        return \"Dolphin{\" +\r\n                \"family='\" + getFamily() + '\\'' +\r\n                \", name='\" + getName() + '\\'' +\r\n                \", age=\" + getAge() +\r\n                \", isMammal=\" + isMammal() +\r\n                \", habitat='\" + getHabitat() + '\\'' +\r\n                \", swimmingSpeed=\" + swimmingSpeed +\r\n                '}';\r\n    }\r\n\r\n    @Override\r\n    public void swim() {\r\n        System.out.println(\"This dolphin is swimming.\");\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/tn/esprit/gestionzoo/entities/Dolphin.java b/src/tn/esprit/gestionzoo/entities/Dolphin.java
+--- a/src/tn/esprit/gestionzoo/entities/Dolphin.java	(revision 99ecd3458ea70e329523e71e1ec5c3690a9dec05)
++++ b/src/tn/esprit/gestionzoo/entities/Dolphin.java	(date 1766420091987)
+@@ -7,7 +7,7 @@
+         super();
+     }
+ 
+-    public Dolphin(String family, String name, int age, boolean isMammal, String habitat, float swimmingSpeed) {
++    public Dolphin(String family, String name, int age, boolean isMammal, String habitat, float swimmingSpeed) throws InvalidAgeException {
+         super(family, name, age, isMammal, habitat);
+         this.swimmingSpeed = swimmingSpeed;
+     }
+@@ -36,4 +36,4 @@
+     public void swim() {
+         System.out.println("This dolphin is swimming.");
+     }
+-}
+\ No newline at end of file
++}
+Index: src/tn/esprit/gestionzoo/entities/Herbivore.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/tn/esprit/gestionzoo/entities/Herbivore.java b/src/tn/esprit/gestionzoo/entities/Herbivore.java
+new file mode 100644
+--- /dev/null	(date 1766420007111)
++++ b/src/tn/esprit/gestionzoo/entities/Herbivore.java	(date 1766420007111)
+@@ -0,0 +1,5 @@
++package tn.esprit.gestionzoo.entities;
++
++public interface Herbivore<T> {
++    void eatPlant(T plant);
++}
+\ No newline at end of file
+Index: src/tn/esprit/gestionzoo/entities/Omnivore.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/tn/esprit/gestionzoo/entities/Omnivore.java b/src/tn/esprit/gestionzoo/entities/Omnivore.java
+new file mode 100644
+--- /dev/null	(date 1766420015503)
++++ b/src/tn/esprit/gestionzoo/entities/Omnivore.java	(date 1766420015503)
+@@ -0,0 +1,5 @@
++package tn.esprit.gestionzoo.entities;
++
++public interface Omnivore<T> extends Carnivore<T>, Herbivore<T> {
++    void eatPlantAndMeat(T food);
++}
+\ No newline at end of file
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"23b8e082-f1c2-4560-b68e-209f66d199bc\" name=\"Changes\" comment=\"\">\r\n      <change afterPath=\"$PROJECT_DIR$/src/tn/esprit/gestionzoo/entities/InvalidAgeException.java\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/src/tn/esprit/gestionzoo/entities/ZooFullException.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/tn/esprit/gestionzoo/entities/Animal.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/tn/esprit/gestionzoo/entities/Animal.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/tn/esprit/gestionzoo/entities/Zoo.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/tn/esprit/gestionzoo/entities/Zoo.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/tn/esprit/gestionzoo/main/ZooManagement.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/tn/esprit/gestionzoo/main/ZooManagement.java\" afterDir=\"false\" />\r\n    </list>\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"FileTemplateManagerImpl\">\r\n    <option name=\"RECENT_TEMPLATES\">\r\n      <list>\r\n        <option value=\"Class\" />\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n    <option name=\"UPDATE_TYPE\" value=\"REBASE\" />\r\n  </component>\r\n  <component name=\"GitHubPullRequestSearchHistory\">{\r\n  &quot;lastFilter&quot;: {\r\n    &quot;state&quot;: &quot;OPEN&quot;,\r\n    &quot;assignee&quot;: &quot;MaHHd1&quot;\r\n  }\r\n}</component>\r\n  <component name=\"GithubPullRequestsUISettings\">{\r\n  &quot;selectedUrlAndAccountId&quot;: {\r\n    &quot;url&quot;: &quot;https://github.com/MaHHd1/JAVA&quot;,\r\n    &quot;accountId&quot;: &quot;e818207b-21c0-464f-a9b4-f0859c967bdd&quot;\r\n  }\r\n}</component>\r\n  <component name=\"ProjectColorInfo\">{\r\n  &quot;associatedIndex&quot;: 2\r\n}</component>\r\n  <component name=\"ProjectId\" id=\"37CjQyVuVqw1Ac4qDm1VDCdTSI8\" />\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\"><![CDATA[{\r\n  \"keyToString\": {\r\n    \"ModuleVcsDetector.initialDetectionPerformed\": \"true\",\r\n    \"RunOnceActivity.ShowReadmeOnStart\": \"true\",\r\n    \"RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252\": \"true\",\r\n    \"git-widget-placeholder\": \"Prosit-6\",\r\n    \"junie.onboarding.icon.badge.shown\": \"true\",\r\n    \"kotlin-language-version-configured\": \"true\",\r\n    \"node.js.detected.package.eslint\": \"true\",\r\n    \"node.js.detected.package.tslint\": \"true\",\r\n    \"node.js.selected.package.eslint\": \"(autodetect)\",\r\n    \"node.js.selected.package.tslint\": \"(autodetect)\",\r\n    \"nodejs_package_manager_path\": \"npm\",\r\n    \"onboarding.tips.debug.path\": \"C:/Users/Mahdi/Desktop/JAVA/JAVAGIT/src/Main.java\",\r\n    \"settings.editor.selected.configurable\": \"ml.llm.LLMConfigurable\",\r\n    \"to.speed.mode.migration.done\": \"true\",\r\n    \"vue.rearranger.settings.migration\": \"true\"\r\n  }\r\n}]]></component>\r\n  <component name=\"SharedIndexes\">\r\n    <attachedChunks>\r\n      <set>\r\n        <option value=\"bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.26199.169\" />\r\n        <option value=\"bundled-js-predefined-d6986cc7102b-9c94529fcfe0-JavaScript-IU-252.26199.169\" />\r\n      </set>\r\n    </attachedChunks>\r\n  </component>\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"23b8e082-f1c2-4560-b68e-209f66d199bc\" name=\"Changes\" comment=\"\" />\r\n      <created>1766413938729</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1766413938729</updated>\r\n      <workItem from=\"1766413940326\" duration=\"20000\" />\r\n      <workItem from=\"1766414001680\" duration=\"3961000\" />\r\n    </task>\r\n    <servers />\r\n  </component>\r\n  <component name=\"TypeScriptGeneratedFilesManager\">\r\n    <option name=\"version\" value=\"3\" />\r\n  </component>\r\n  <component name=\"Vcs.Log.Tabs.Properties\">\r\n    <option name=\"TAB_STATES\">\r\n      <map>\r\n        <entry key=\"MAIN\">\r\n          <value>\r\n            <State />\r\n          </value>\r\n        </entry>\r\n      </map>\r\n    </option>\r\n  </component>\r\n  <component name=\"XSLT-Support.FileAssociations.UIState\">\r\n    <expand />\r\n    <select />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision 99ecd3458ea70e329523e71e1ec5c3690a9dec05)
++++ b/.idea/workspace.xml	(date 1766420186731)
+@@ -5,11 +5,15 @@
+   </component>
+   <component name="ChangeListManager">
+     <list default="true" id="23b8e082-f1c2-4560-b68e-209f66d199bc" name="Changes" comment="">
+-      <change afterPath="$PROJECT_DIR$/src/tn/esprit/gestionzoo/entities/InvalidAgeException.java" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/src/tn/esprit/gestionzoo/entities/ZooFullException.java" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/tn/esprit/gestionzoo/entities/Carnivore.java" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/tn/esprit/gestionzoo/entities/Food.java" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/tn/esprit/gestionzoo/entities/Herbivore.java" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/tn/esprit/gestionzoo/entities/Omnivore.java" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/tn/esprit/gestionzoo/entities/Animal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/tn/esprit/gestionzoo/entities/Animal.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/tn/esprit/gestionzoo/entities/Zoo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/tn/esprit/gestionzoo/entities/Zoo.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/tn/esprit/gestionzoo/entities/Aquatic.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/tn/esprit/gestionzoo/entities/Aquatic.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/tn/esprit/gestionzoo/entities/Dolphin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/tn/esprit/gestionzoo/entities/Dolphin.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/tn/esprit/gestionzoo/entities/Penguin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/tn/esprit/gestionzoo/entities/Penguin.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/tn/esprit/gestionzoo/entities/Terrestrial.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/tn/esprit/gestionzoo/entities/Terrestrial.java" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/src/tn/esprit/gestionzoo/main/ZooManagement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/tn/esprit/gestionzoo/main/ZooManagement.java" afterDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+@@ -53,7 +57,7 @@
+     "ModuleVcsDetector.initialDetectionPerformed": "true",
+     "RunOnceActivity.ShowReadmeOnStart": "true",
+     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+-    "git-widget-placeholder": "Prosit-6",
++    "git-widget-placeholder": "Prosit-7",
+     "junie.onboarding.icon.badge.shown": "true",
+     "kotlin-language-version-configured": "true",
+     "node.js.detected.package.eslint": "true",
+Index: src/tn/esprit/gestionzoo/entities/Carnivore.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/tn/esprit/gestionzoo/entities/Carnivore.java b/src/tn/esprit/gestionzoo/entities/Carnivore.java
+new file mode 100644
+--- /dev/null	(date 1766419992550)
++++ b/src/tn/esprit/gestionzoo/entities/Carnivore.java	(date 1766419992550)
+@@ -0,0 +1,5 @@
++package tn.esprit.gestionzoo.entities;
++
++public interface Carnivore<T> {
++    void eatMeat(T meat);
++}
+\ No newline at end of file
+Index: src/tn/esprit/gestionzoo/entities/Food.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/tn/esprit/gestionzoo/entities/Food.java b/src/tn/esprit/gestionzoo/entities/Food.java
+new file mode 100644
+--- /dev/null	(date 1766420032722)
++++ b/src/tn/esprit/gestionzoo/entities/Food.java	(date 1766420032722)
+@@ -0,0 +1,7 @@
++package tn.esprit.gestionzoo.entities;
++
++public enum Food {
++    MEAT,
++    PLANT,
++    BOTH
++}
+\ No newline at end of file
